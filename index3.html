@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAGence - Secure AI for Your Business Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #1f2937;
+            --primary-light: #374151;
+            --secondary-text: #6b7280;
+            --border-color: #e5e7eb;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --accent-blue: #0ea5e9;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --transition-speed: 0.3s;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #ffffff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-dark);
+            background-color: var(--bg-white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .text-center { text-align: center; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+        /* Header - Streamlined */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-placeholder {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            letter-spacing: -0.025em;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary-light);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all var(--transition-speed) ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width var(--transition-speed) ease;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-dark);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        /* Hero Section - Enhanced */
+        .hero-section {
+            text-align: center;
+            padding: 8rem 0;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 3.75rem;
+            font-weight: 900;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.05;
+            letter-spacing: -0.05em;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-title .highlight {
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient-shift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--secondary-text);
+            margin-bottom: 3rem;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.65;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.25rem 3rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            text-decoration: none;
+            box-shadow: var(--shadow-lg);
+            letter-spacing: 0.025em;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+        }
+
+        /* Value Proposition - Refined */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0;
+            margin: 4rem 0;
+        }
+
+        .value-card {
+            background: var(--bg-white);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+            transform: scaleY(0);
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .value-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .value-card:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .value-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            line-height: 1.4;
+        }
+
+        /* About Section - Visual Enhancement */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            letter-spacing: -0.025em;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .about-text p {
+            color: var(--secondary-text);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.75;
+        }
+
+        /* Enhanced Visualization */
+        .visualization-container {
+            background: var(--gradient-hero);
+            height: 420px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-flow {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .data-source {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .doc-item {
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: doc-pulse 3s ease-in-out infinite;
+        }
+
+        .doc-item:nth-child(1) { animation-delay: 0s; }
+        .doc-item:nth-child(2) { animation-delay: 0.5s; }
+        .doc-item:nth-child(3) { animation-delay: 1s; }
+        .doc-item:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes doc-pulse {
+            0%, 70%, 100% { transform: scale(1); opacity: 0.8; }
+            35% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .flow-arrow {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 8px solid transparent;
+            border-left: 12px solid var(--accent-purple);
+        }
+
+        .ai-core {
+            background: var(--primary-dark);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            min-width: 140px;
+        }
+
+        .ai-core::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(14, 165, 233, 0.3), transparent);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .ai-core-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .output-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Features Grid - Enhanced */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--secondary-text);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Upload Section - Improved */
+        .upload-section {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 4rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            background: var(--bg-white);
+            transition: all var(--transition-speed) ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent-blue);
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+        }
+
+        .upload-area.drag-over {
+            border-color: var(--accent-green);
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+            transform: scale(1.02);
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            font-weight: 600;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .file-label:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.25rem 3rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item h4 {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-item p a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .contact-item p a:hover {
+            color: var(--primary-dark);
+        }
+
+        .linkedin-section, .demo-card {
+            background: var(--bg-white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
+
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            background: #0077b5;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .linkedin-link:hover {
+            background: #005582;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: #9ca3af;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--primary-light);
+            color: #6b7280;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-title { font-size: 2.5rem; }
+            .about-content, .contact-content { grid-template-columns: 1fr; gap: 3rem; }
+            .section { padding: 4rem 0; }
+            .data-flow { flex-direction: column; text-align: center; }
+            .flow-arrow { width: 3px; height: 40px; }
+            .flow-arrow::after { 
+                top: unset; bottom: -8px; left: 50%;
+                transform: translateX(-50%) rotate(90deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .nav-menu { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            .section { padding: 3rem 0; }
+            .features-grid { grid-template-columns: 1fr; }
+            .upload-section, .linkedin-section, .demo-card { padding: 2rem; }
+            .visualization-container { height: auto; padding: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.75rem; }
+            .section-title { font-size: 2rem; }
+            .value-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container container">
+            <div class="logo-section">
+                <div class="logo-placeholder" aria-hidden="true">RAG</div>
+                <div class="company-name">RAGence</div>
+            </div>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="#home" role="menuitem">Home</a></li>
+                <li role="none"><a href="#about" role="menuitem">About</a></li>
+                <li role="none"><a href="#features" role="menuitem">Features</a></li>
+                <li role="none"><a href="#upload" role="menuitem">Get Started</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section id="home" class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Transform Your Data Into <span class="highlight">Intelligent Conversations</span></h1>
+                    <p class="hero-subtitle">Enterprise-grade RAG technology that eliminates AI hallucinations while keeping your sensitive data completely secure and private.</p>
+                    <a href="#upload" class="hero-cta">Start Your AI Journey →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="value-grid">
+                    <div class="value-card">
+                        <div class="value-text">Zero-hallucination AI powered by your actual business data</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-text">Military-grade security with complete data sovereignty</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-text">Deploy anywhere: cloud, on-premise, or hybrid</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-text">Enterprise-ready with SOC 2, GDPR & HIPAA compliance</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="about-content container">
+                <div class="about-text">
+                    <h2 class="section-title">Secure AI That Actually Knows Your Business</h2>
+                    <p>RAGence revolutionizes how enterprises interact with their data by combining advanced Retrieval-Augmented Generation with uncompromising security. Our platform ensures every AI response is grounded in your actual business knowledge.</p>
+                    <p>Built for the modern enterprise, we eliminate the guesswork and hallucinations that plague traditional AI systems, delivering accurate, contextual insights while maintaining complete control over your sensitive information.</p>
+                    <p>Transform your organizational knowledge into a powerful AI assistant that understands your business context, follows your compliance requirements, and scales with your growth.</p>
+                </div>
+                
+                <div class="visualization-container">
+                    <div class="data-flow">
+                        <div class="data-source">
+                            <div class="doc-item">📄 PDFs</div>
+                            <div class="doc-item">📊 Databases</div>
+                            <div class="doc-item">📑 Documents</div>
+                            <div class="doc-item">🗂️ Knowledge Base</div>
+                        </div>
+                        
+                        <div class="flow-arrow"></div>
+                        
+                        <div class="ai-core">
+                            <div class="ai-core-content">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
+                                <div>RAGence AI</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8;">Secure Processing</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-arrow"></div>
+                        
+                        <div class="output-box">
+                            <span>💡</span>
+                            <span>Smart Insights</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section" style="background: var(--bg-light);">
+            <div class="container">
+                <h2 class="section-title text-center">Enterprise-Grade Capabilities</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3 class="feature-title">🔐 End-to-End Encryption</h3>
+                        <p class="feature-description">Military-grade encryption protects your data throughout the entire pipeline, from upload to storage to retrieval, ensuring complete confidentiality.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">🎯 Zero Hallucinations</h3>
+                        <p class="feature-description">Advanced RAG techniques ensure AI responses are always grounded in your actual data, eliminating false or fabricated information.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">🧠 Intelligent Processing</h3>
+                        <p class="feature-description">Sophisticated parsing and indexing of complex documents, databases, and knowledge bases with semantic understanding.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">⚡ Enterprise Scale</h3>
+                        <p class="feature-description">Built to handle enterprise workloads with high availability, load balancing, and seamless scaling capabilities.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">✅ Compliance Ready</h3>
+                        <p class="feature-description">Meets industry standards including SOC 2, GDPR, HIPAA, and other regulatory requirements for data handling.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">🏢 Flexible Deployment</h3>
+                        <p class="feature-description">Deploy in your own infrastructure or preferred cloud environment, maintaining complete data sovereignty.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="upload" class="section">
+            <div class="container">
+                <h2 class="section-title text-center">Get Started in Minutes</h2>
+                <div class="upload-section">
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Securely upload your business data and watch RAGence transform it into intelligent, conversational AI.</p>
+
+                    <div class="upload-area" role="group" aria-labelledby="upload-heading" tabindex="0">
+                        <h3 id="upload-heading" style="font-size: 1.5rem; margin-bottom: 1rem;">Drop Your Files Here</h3>
+                        <p style="color: var(--secondary-text); margin-bottom: 2rem;">Supports: PDF, DOCX, TXT, CSV, JSON, XML</p>
+
+                        <input type="file" id="file-upload" multiple accept=".pdf,.docx,.txt,.csv,.json,.xml" class="sr-only">
+                        <label for="file-upload" class="file-label">Choose Files to Upload</label>
+                    </div>
+
+                    <button class="cta-button">Process Your Data</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section" style="background: var(--bg-light);">
+            <div class="container">
+                <h2 class="section-title text-center">Ready to Transform Your Business?</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Let's Connect</h3>
+
+                        <div class="contact-item">
+                            <h4>Enterprise Sales</h4>
+                            <p><a href="mailto:sales@ragence.com">sales@ragence.com</a></p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h4>Technical Support</h4>
+                            <p><a href="mailto:support@ragence.com">support@ragence.com</a></p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h4>Partnership Inquiries</h4>
+                            <p><a href="mailto:partners@ragence.com">partners@ragence.com</a></p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h4>Phone</h4>
+                            <p><a href="tel:+1-555-RAG-ENCE">+1 (555) RAG-ENCE</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-actions">
+                        <div class="linkedin-section">
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-dark);">Connect with Us</h4>
+                            <p style="margin-bottom: 1.5rem; color: var(--secondary-text);">Follow our journey and stay updated with the latest in secure AI.</p>
+                            <a href="https://linkedin.com/company/ragence" class="linkedin-link">
+                                <span style="margin-right: 0.5rem;">💼</span>
+                                Follow on LinkedIn
+                            </a>
+                        </div>
+
+                        <div class="demo-card">
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-dark);">Schedule a Demo</h4>
+                            <p style="margin-bottom: 1.5rem; color: var(--secondary-text);">See RAGence in action with your own data in a personalized demonstration.</p>
+                            <a href="mailto:demo@ragence.com?subject=Demo Request" class="cta-button" style="display: inline-block; text-decoration: none;">
+                                Book Your Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#upload">Get Started</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Documentation</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#about">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">News</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">Blog</a>
+                    <a href="#">Case Studies</a>
+                    <a href="#">White Papers</a>
+                    <a href="#">API Reference</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Security</a>
+                    <a href="#">Compliance</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 RAGence. All rights reserved. | Transforming enterprise data into intelligent conversations.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // File upload functionality
+        const fileInput = document.getElementById('file-upload');
+        const uploadArea = document.querySelector('.upload-area');
+        const ctaButton = document.querySelector('.cta-button');
+        let uploadedFiles = [];
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        // File input change handler
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        // Handle file uploads
+        function handleFiles(files) {
+            uploadedFiles = [...uploadedFiles, ...files];
+            updateFileDisplay();
+        }
+
+        function updateFileDisplay() {
+            const uploadHeading = document.getElementById('upload-heading');
+            if (uploadedFiles.length > 0) {
+                uploadHeading.textContent = `${uploadedFiles.length} file(s) selected`;
+                uploadHeading.style.color = 'var(--accent-green)';
+                ctaButton.textContent = `Process ${uploadedFiles.length} File(s)`;
+                ctaButton.disabled = false;
+            } else {
+                uploadHeading.textContent = 'Drop Your Files Here';
+                uploadHeading.style.color = '';
+                ctaButton.textContent = 'Process Your Data';
+                ctaButton.disabled = true;
+            }
+        }
+
+        // CTA button functionality
+        ctaButton.addEventListener('click', () => {
+            if (uploadedFiles.length > 0) {
+                alert(`Processing ${uploadedFiles.length} files...\n\nThis is a demo. In production, your files would be securely processed and indexed for AI querying.`);
+            } else {
+                alert('Please upload some files first!');
+            }
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize
+        updateFileDisplay();
+        ctaButton.disabled = true;
+    </script>
+</body>
+</html>
