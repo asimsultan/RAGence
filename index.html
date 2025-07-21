@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAGence - Secure AI for Your Business Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-dark: #1f2937;
+            --primary-light: #374151;
+            --secondary-text: #6b7280;
+            --border-color: #e5e7eb;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --accent-blue: #0077b5;
+            --transition-speed: 0.3s;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,10 +28,35 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #2c3e50;
-            background-color: #ffffff;
+            color: var(--primary-dark);
+            background-color: var(--bg-white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
         }
 
         /* Header */
@@ -27,363 +64,463 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e8eaed;
+            background: rgba(255, 255, 255, 0.9); /* Slightly less opaque */
+            backdrop-filter: blur(12px); /* Increased blur */
+            border-bottom: 1px solid var(--border-color);
             z-index: 1000;
-            padding: 0;
+            padding: 0.75rem 0; /* Slightly reduced padding */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); /* Subtle shadow */
         }
 
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 2rem;
         }
 
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem; /* Slightly reduced gap */
         }
 
         .logo-placeholder {
-            width: 45px;
-            height: 45px;
+            width: 40px; /* Slightly smaller */
+            height: 40px;
             border: 1px solid #d1d5db;
-            border-radius: 6px;
+            border-radius: 8px; /* More rounded */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            color: #6b7280;
-            background: #f9fafb;
+            font-size: 0.65rem; /* Smaller font */
+            color: var(--secondary-text);
+            background: var(--bg-light);
+            flex-shrink: 0;
         }
 
         .company-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1f2937;
-            letter-spacing: -0.025em;
+            font-size: 1.4rem; /* Slightly smaller */
+            font-weight: 700; /* Bolder */
+            color: var(--primary-dark);
+            letter-spacing: -0.03em; /* Tighter letter-spacing */
         }
 
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 2.5rem;
+            gap: 2rem; /* Reduced gap */
         }
 
         .nav-menu a {
             text-decoration: none;
-            color: #374151;
+            color: var(--primary-light);
             font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
+            font-size: 0.9rem; /* Slightly smaller */
+            transition: color var(--transition-speed) ease, border-bottom var(--transition-speed) ease;
             padding: 0.5rem 0;
+            position: relative; /* For underline effect */
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-dark);
+            transition: width var(--transition-speed) ease;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
         }
 
         .nav-menu a:hover {
-            color: #1f2937;
+            color: var(--primary-dark);
         }
 
         .nav-menu a.active {
-            color: #1f2937;
-            border-bottom: 2px solid #1f2937;
+            color: var(--primary-dark);
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 80px;
+            margin-top: 75px; /* Adjust based on header height */
         }
 
         .section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 6rem 0; /* Increased vertical padding for more breathing room */
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background-color: var(--bg-light);
         }
 
         /* Hero Section */
         .hero-section {
             text-align: center;
-            padding: 8rem 2rem 6rem;
-            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            padding: 10rem 0 8rem; /* More vertical padding */
+            background: linear-gradient(180deg, #f0f4f8 0%, #ffffff 100%); /* Softer gradient */
+            overflow: hidden; /* For potential background elements */
         }
 
         .hero-title {
-            font-size: 3.2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
+            font-size: 3.5rem; /* Larger, more impactful */
+            font-weight: 800; /* Even bolder */
+            color: var(--primary-dark);
+            margin-bottom: 1.25rem;
             line-height: 1.1;
+            letter-spacing: -0.04em;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
-            color: #6b7280;
-            margin-bottom: 3rem;
-            max-width: 650px;
+            font-size: 1.25rem; /* Slightly larger */
+            color: var(--secondary-text);
+            margin-bottom: 3.5rem;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         .hero-cta {
-            display: inline-block;
-            background: #1f2937;
+            display: inline-flex; /* For better alignment with icon if added */
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-dark);
             color: white;
-            padding: 1rem 2.5rem;
+            padding: 1rem 2.75rem; /* More generous padding */
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: 8px; /* More rounded */
+            font-size: 1.05rem; /* Slightly larger */
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
             text-decoration: none;
+            box-shadow: 0 6px 20px rgba(31, 41, 55, 0.2); /* Stronger shadow */
+            letter-spacing: 0.02em;
         }
 
         .hero-cta:hover {
-            background: #374151;
-            transform: translateY(-1px);
+            background: var(--primary-light);
+            transform: translateY(-2px); /* More pronounced lift */
+            box-shadow: 0 8px 25px rgba(31, 41, 55, 0.25);
         }
 
         /* Value Proposition Sections */
         .value-section {
-            background: #f9fafb;
+            background: var(--bg-light);
             text-align: center;
-            padding: 3rem 2rem;
-            border-left: 4px solid #1f2937;
+            padding: 2.5rem 2rem; /* Reduced padding */
+            border-left: 5px solid var(--primary-dark); /* Thicker border */
+            margin-bottom: 1px; /* To prevent border collapse in some cases */
         }
 
         .value-text {
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: #374151;
-            max-width: 800px;
+            font-size: 1.5rem; /* Larger */
+            font-weight: 600;
+            color: var(--primary-light);
+            max-width: 900px;
             margin: 0 auto;
+            line-height: 1.4;
         }
 
         .value-section:nth-child(even) {
-            background: #ffffff;
-            border-left: 4px solid #6b7280;
+            background: var(--bg-white);
+            border-left: 5px solid var(--secondary-text);
         }
 
         /* About Section */
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 5rem; /* Increased gap */
             align-items: center;
         }
 
-        .about-text h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 2rem;
+        .about-text h2, .section-title {
+            font-size: 2.8rem; /* Larger, consistent heading */
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 1.75rem;
+            letter-spacing: -0.03em;
         }
 
         .about-text p {
-            color: #6b7280;
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            line-height: 1.7;
+            color: var(--secondary-text);
+            margin-bottom: 1.25rem;
+            font-size: 1.1rem; /* Slightly larger */
+            line-height: 1.75;
         }
 
         .about-image {
-            background: #f3f4f6;
-            height: 350px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #e0e7ee 0%, #f0f4f8 100%); /* Gradient background */
+            height: 400px; /* Taller */
+            width: 730px; /* Taller */
+            border-radius: 1px; /* More rounded */
             display: flex;
             align-items: center;
             justify-content: center;
             color: #9ca3af;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: 400;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* More prominent shadow */
         }
 
         /* Features Section */
         .section-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #1f2937;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem; /* More space below title */
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Adjusted min-width */
+            gap: 2.5rem; /* Increased gap */
+            margin: 3.5rem 0;
         }
 
         .feature-card {
-            background: white;
+            background: var(--bg-white);
             padding: 2.5rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            border-radius: 12px; /* More rounded */
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); /* Softer initial shadow */
         }
 
         .feature-card:hover {
-            border-color: #d1d5db;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: #c1c5ca; /* Darker hover border */
+            transform: translateY(-4px); /* More pronounced lift */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Stronger hover shadow */
         }
 
         .feature-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 1rem;
+            font-size: 1.3rem; /* Slightly larger */
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.8rem;
         }
 
         .feature-description {
-            color: #6b7280;
-            line-height: 1.6;
+            color: var(--secondary-text);
+            line-height: 1.7;
+            font-size: 0.95rem; /* Slightly smaller for density */
         }
 
         /* Upload Section */
         .upload-section {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 3rem;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px; /* More rounded */
+            padding: 3.5rem; /* Increased padding */
             text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .upload-section p {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .upload-area {
-            border: 2px dashed #d1d5db;
-            border-radius: 8px;
-            padding: 3rem 2rem;
-            margin: 2rem 0;
-            background: white;
-            transition: all 0.3s ease;
+            border: 2px dashed #9ea8b3; /* Darker dashed border */
+            border-radius: 10px;
+            padding: 3.5rem 2rem; /* Increased padding */
+            margin: 2.5rem 0;
+            background: var(--bg-white);
+            transition: all var(--transition-speed) ease;
+            cursor: pointer; /* Indicate interactivity */
         }
 
         .upload-area:hover {
-            border-color: #9ca3af;
+            border-color: #6b7280; /* Darker on hover */
+            background-color: #f3f5f8; /* Subtle background change */
+        }
+
+        .upload-area h3 {
+            color: var(--primary-light);
+            margin-bottom: 0.75rem;
+            font-size: 1.4rem;
+        }
+
+        .upload-area p {
+            color: var(--secondary-text);
+            margin-bottom: 1.75rem;
+            font-size: 0.95rem;
         }
 
         .file-label {
             display: inline-block;
-            padding: 0.8rem 2rem;
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
+            padding: 0.9rem 2.2rem; /* More padding */
+            background: var(--bg-white);
+            border: 1px solid #c8ced6; /* Darker border */
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
             font-weight: 500;
-            color: #374151;
+            color: var(--primary-light);
             margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .file-label:hover {
-            background: #f9fafb;
+            background: #eef1f4; /* Darker hover background */
+            border-color: #b0b6bc;
+            transform: translateY(-1px);
         }
 
         .cta-button {
-            background: #1f2937;
+            background: var(--primary-dark);
             color: white;
-            padding: 1rem 2.5rem;
+            padding: 1.1rem 3rem; /* More generous padding */
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem; /* Slightly larger */
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
+            transition: all var(--transition-speed) ease;
+            margin-top: 1.5rem; /* More margin */
+            box-shadow: 0 6px 20px rgba(31, 41, 55, 0.2);
+            letter-spacing: 0.02em;
         }
 
         .cta-button:hover {
-            background: #374151;
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(31, 41, 55, 0.25);
         }
 
         /* Contact Section */
         .contact-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            grid-template-columns: 1.2fr 1fr; /* Slightly wider left column */
+            gap: 5rem; /* Increased gap */
         }
 
         .contact-info h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem; /* Larger */
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
         }
 
         .contact-item {
-            margin-bottom: 2rem;
+            margin-bottom: 1.75rem; /* More space */
         }
 
         .contact-item h4 {
             font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.4rem; /* Slightly less margin */
+            font-size: 1.15rem;
         }
 
         .contact-item p {
-            color: #6b7280;
+            color: var(--secondary-text);
+            font-size: 1.05rem;
         }
 
         .linkedin-section {
-            background: #f9fafb;
-            padding: 2rem;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            background: var(--bg-light);
+            padding: 2.5rem; /* More padding */
+            border-radius: 12px; /* More rounded */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
         }
 
         .linkedin-section h4 {
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1.25rem;
+            font-size: 1.25rem;
+        }
+
+        .linkedin-section p {
+            color: var(--secondary-text);
+            margin-bottom: 1.75rem;
+            line-height: 1.6;
         }
 
         .linkedin-link {
-            display: inline-block;
-            background: #0077b5;
+            display: inline-flex;
+            align-items: center;
+            background: var(--accent-blue);
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
+            padding: 0.9rem 1.8rem; /* More padding */
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
         }
 
         .linkedin-link:hover {
-            background: #005885;
+            background: #005f93; /* Darker blue */
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 119, 181, 0.4);
+        }
+
+        .demo-card {
+            padding: 2.5rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .demo-card p {
+            color: var(--secondary-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
         /* Footer */
         .footer {
-            background: #1f2937;
-            color: #9ca3af;
-            padding: 3rem 2rem 2rem;
+            background: var(--primary-dark);
+            color: #b0b9c3; /* Lighter footer text */
+            padding: 4rem 0 2rem; /* More padding */
         }
 
         .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted min-width */
+            gap: 2.5rem; /* Increased gap */
+            margin-bottom: 2.5rem;
         }
 
         .footer-section h4 {
             color: white;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem; /* More margin */
+            font-size: 1.1rem;
         }
 
         .footer-section a {
-            color: #9ca3af;
+            color: #b0b9c3;
             text-decoration: none;
             display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
+            margin-bottom: 0.75rem; /* More margin */
+            transition: color var(--transition-speed) ease;
+            font-size: 0.95rem;
         }
 
         .footer-section a:hover {
@@ -392,45 +529,80 @@
 
         .footer-bottom {
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #374151;
-            color: #6b7280;
+            padding-top: 2.5rem; /* More padding */
+            border-top: 1px solid var(--primary-light);
+            color: #8c95a0; /* Darker copyright text */
+            font-size: 0.9rem;
         }
 
         /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-
-            .nav-menu {
-                gap: 1.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
+        @media (max-width: 992px) {
             .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .value-text {
-                font-size: 1.2rem;
+                font-size: 2.8rem;
             }
 
             .about-content,
             .contact-content {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 3rem;
+            }
+
+            .about-image {
+                height: 300px;
             }
 
             .section {
-                padding: 3rem 1rem;
+                padding: 4rem 0;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .value-text {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 0.75rem;
+                padding: 0.75rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
             .hero-section {
-                padding: 6rem 1rem 4rem;
+                padding: 8rem 0 6rem;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .value-section {
+                padding: 2rem 1rem;
+            }
+
+            .value-text {
+                font-size: 1.1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-section, .linkedin-section, .demo-card {
+                padding: 2rem;
             }
         }
 
@@ -442,183 +614,517 @@
             }
 
             .company-name {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
 
             .hero-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
-            .value-text {
-                font-size: 1.1rem;
+            .hero-cta {
+                padding: 0.8rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
             }
         }
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .visualization-pro-ingestion {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Distribute items */
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #e0e7ee 0%, #f0f4f8 100%);
+        border-radius: 2px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        padding: 2rem;
+        gap: 1.5rem;
+        position: relative;
+        overflow: hidden; /* Hide overflowing animations */
+    }
+
+    /* --- Document Input Area --- */
+    .doc-input-area {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        flex-shrink: 0;
+        align-items: flex-start;
+        position: relative;
+        padding-right: 1.5rem; /* Space before connection line */
+    }
+
+    .doc-icon {
+        background-color: white;
+        border: 1px solid #dcdfe3;
+        border-radius: 8px;
+        padding: 0.7rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--primary-light);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        position: relative;
+        transform: translateX(0);
+        animation: doc-appear-float 5s ease-out infinite alternate;
+    }
+
+    .doc-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .doc-pdf { color: #e60000; background-color: #ffebeb; border-color: #ffdada; animation-delay: 0s; }
+    .doc-pdf svg { color: #e60000; }
+    .doc-docx { color: #0066cc; background-color: #ebf3fc; border-color: #d6e8f7; animation-delay: 1.2s; }
+    .doc-docx svg { color: #0066cc; }
+    .doc-csv { color: #008040; background-color: #e6f7eb; border-color: #d6f0da; animation-delay: 2.4s; }
+    .doc-csv svg { color: #008040; }
+    .doc-json { color: #800080; background-color: #f7ebf7; border-color: #f0d6f0; animation-delay: 3.6s; }
+    .doc-json svg { color: #800080; }
+
+    @keyframes doc-appear-float {
+        0% { opacity: 0; transform: translateX(-20px) translateY(5px); }
+        20% { opacity: 1; transform: translateX(0px) translateY(0px); }
+        80% { opacity: 1; transform: translateX(0px) translateY(-5px); }
+        100% { opacity: 0; transform: translateX(20px) translateY(0px); }
+    }
+
+    /* --- Flow Paths (Lines with Dots) --- */
+    .flow-path {
+        position: relative;
+        width: 40px; /* Length of the line segment */
+        height: 3px;
+        background: linear-gradient(to right, #a0a8b3, var(--primary-dark));
+        flex-shrink: 0;
+    }
+
+    .flow-path::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -8px; /* Arrowhead position */
+        transform: translateY(-50%);
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 8px solid var(--primary-dark);
+    }
+
+    .flow-path.output-path {
+        background: linear-gradient(to right, var(--primary-light), #6b7280);
+    }
+    .flow-path.output-path::after {
+        border-left-color: var(--primary-light);
+    }
+
+    .flow-dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        animation: flow-dots 2s linear infinite;
+    }
+
+    @keyframes flow-dots {
+        0% { left: 0%; opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { left: 100%; opacity: 0; }
+    }
+
+    /* --- AI Processor Unit --- */
+    .ai-processor {
+        background: var(--primary-dark);
+        color: white;
+        padding: 2rem 2.5rem;
+        border-radius: 15px; /* More rounded */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        font-weight: 700;
+        font-size: 1.1rem;
+        position: relative;
+        overflow: hidden; /* For inner glow */
+        flex-shrink: 0;
+        width: 170px;
+        text-align: center;
+    }
+
+    .ai-processor .lock-shield svg {
+        color: white;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 0.5rem;
+    }
+
+    .processing-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(circle, rgba(100, 200, 255, 0.15) 0%, transparent 70%);
+        transform: translate(-50%, -50%) scale(0);
+        border-radius: 50%;
+        animation: pulse-glow 3s infinite ease-out;
+    }
+
+    @keyframes pulse-glow {
+        0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.7; }
+        50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.2; }
+        100% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.7; }
+    }
+
+    /* --- Output Display --- */
+    .output-display {
+        background-color: #ecf3f7;
+        border: 1px solid #d0e4ee;
+        border-radius: 12px;
+        padding: 1rem 1.8rem;
+        font-weight: 600;
+        color: var(--primary-dark);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .output-spark {
+        font-size: 1.2rem;
+        animation: sparkle 1.5s infinite alternate;
+    }
+
+    @keyframes sparkle {
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 992px) {
+        .visualization-pro-ingestion {
+            flex-wrap: wrap; /* Allow wrapping */
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .doc-input-area {
+            flex-direction: row; /* Documents side-by-side */
+            width: 100%;
+            justify-content: center;
+            padding-right: 0;
+            margin-bottom: 1.5rem; /* Space before processor */
+        }
+
+        .doc-icon {
+            animation: none; /* Disable complex animation for mobile performance */
+            transform: translateX(0) translateY(0) !important; /* Override animation */
+            opacity: 1 !important;
+        }
+
+        .flow-path {
+            width: 2px;
+            height: 50px; /* Shorter height */
+            background: linear-gradient(to bottom, #a0a8b3, var(--primary-dark));
+        }
+
+        .flow-path::after {
+            top: unset;
+            bottom: -8px; /* Arrowhead pointing down */
+            right: 50%;
+            transform: translateX(50%) rotate(90deg); /* Rotate for vertical arrow */
+            border-left: none; /* Remove original arrow */
+            border-top: 8px solid var(--primary-dark); /* New top arrow */
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        .flow-path.output-path {
+            background: linear-gradient(to bottom, var(--primary-light), #6b7280);
+        }
+        .flow-path.output-path::after {
+            border-top-color: var(--primary-light);
+        }
+
+        .ai-processor {
+            margin: 1.5rem 0; /* Vertical spacing */
+        }
+    }
+
+    @media (max-width: 600px) {
+        .doc-input-area {
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .doc-icon {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.75rem;
+        }
+        .doc-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+        .ai-processor {
+            padding: 1.5rem 1.8rem;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+        .ai-processor .lock-shield svg {
+            width: 32px;
+            height: 32px;
+        }
+        .output-display {
+            font-size: 0.6rem;
+        }
+    }
+
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
-        <nav class="nav-container">
+        <nav class="nav-container container">
             <div class="logo-section">
-                <div class="logo-placeholder">Your Logo Here</div>
+                <div class="logo-placeholder" aria-hidden="true">Agentic</div>
                 <div class="company-name">RAGence</div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#upload">Upload Data</a></li>
-                <li><a href="#contact">Contact</a></li>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="#home" role="menuitem">Home</a></li>
+                <li role="none"><a href="#about" role="menuitem">About</a></li>
+                <li role="none"><a href="#features" role="menuitem">Features</a></li>
+                <li role="none"><a href="#upload" role="menuitem">Upload Data</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Hero Section -->
         <section id="home" class="hero-section">
-            <h1 class="hero-title">Talk to your data. Safely. Smartly.</h1>
-            <p class="hero-subtitle">Transform your business knowledge into intelligent, secure conversations with advanced RAG technology that eliminates hallucinations and protects your data.</p>
-            <a href="#upload" class="hero-cta">Get Started</a>
-        </section>
-
-        <!-- Value Proposition Sections -->
-        <section class="value-section">
-            <div class="value-text">Secure AI access to your business knowledge.</div>
+            <div class="container">
+                <h1 class="hero-title">Talk to your data. <span style="color: var(--primary-light);">Safely. Smartly.</span></h1>
+                <p class="hero-subtitle">Transform your business knowledge into intelligent, secure conversations with advanced RAG technology that eliminates hallucinations and protects your data.</p>
+                <a href="#upload" class="hero-cta">Get Started &rarr;</a>
+            </div>
         </section>
 
         <section class="value-section">
-            <div class="value-text">Your data, your AI. No hallucinations. No leaks.</div>
+            <div class="value-text container">Secure AI access to your business knowledge.</div>
         </section>
 
         <section class="value-section">
-            <div class="value-text">Feed your LLM with its own secure, encrypted brain.</div>
+            <div class="value-text container">Your data, your AI. No hallucinations. No leaks.</div>
         </section>
 
         <section class="value-section">
-            <div class="value-text">Finally, a private GPT that knows your business — and respects your data.</div>
+            <div class="value-text container">Feed your LLM with its own secure, encrypted brain.</div>
         </section>
 
-        <!-- About Section -->
+        <section class="value-section">
+            <div class="value-text container">Finally, a private GPT that knows your business — and respects your data.</div>
+        </section>
+
         <section id="about" class="section">
-            <div class="about-content">
+            <div class="about-content container">
                 <div class="about-text">
                     <h2>About RAGence</h2>
                     <p>RAGence is an enterprise-grade platform that enables organizations to securely interact with their proprietary data using advanced Retrieval-Augmented Generation (RAG) technology.</p>
                     <p>Built with security and privacy at its core, our platform ensures your sensitive business information never leaves your control while providing the intelligent insights you need to make informed decisions.</p>
                     <p>Our solution eliminates AI hallucinations by grounding responses in your actual data, providing accurate, contextual, and trustworthy interactions with your business knowledge base.</p>
                 </div>
+                
+
                 <div class="about-image">
-                    <div>Enterprise AI Platform Visualization</div>
+                    <div class="visualization-pro-ingestion">
+                        <div class="doc-input-area">
+                            <div class="doc-icon doc-pdf" aria-label="PDF document icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                <span>PDF</span>
+                            </div>
+                            <div class="doc-icon doc-docx" aria-label="DOCX document icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                <span>DOCX</span>
+                            </div>
+                            <div class="doc-icon doc-csv" aria-label="CSV document icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                <span>CSV</span>
+                            </div>
+                            <div class="doc-icon doc-json" aria-label="JSON document icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                <span>JSON</span>
+                            </div>
+                        </div>
+                
+                        <div class="flow-path">
+                            <div class="flow-dot" style="animation-delay: 0s;"></div>
+                            <div class="flow-dot" style="animation-delay: 0.5s;"></div>
+                            <div class="flow-dot" style="animation-delay: 1s;"></div>
+                        </div>
+                
+                        <div class="ai-processor">
+                            <div class="lock-shield" aria-label="Secure processing icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <span class="processor-label">RAGence AI Core</span>
+                            <div class="processing-glow"></div>
+                        </div>
+                
+                        <div class="flow-path output-path">
+                            <div class="flow-dot" style="animation-delay: 0s;"></div>
+                            <div class="flow-dot" style="animation-delay: 0.5s;"></div>
+                            <div class="flow-dot" style="animation-delay: 1s;"></div>
+                        </div>
+                
+                        <div class="output-display">
+                            <div class="output-text">Insight Generation</div>
+                        </div>
+                    </div>
                 </div>
+
+
+
             </div>
         </section>
 
-        <!-- Features Section -->
         <section id="features" class="section">
-            <h2 class="section-title">Enterprise Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3 class="feature-title">End-to-End Encryption</h3>
-                    <p class="feature-description">Military-grade encryption protects your data throughout the entire pipeline, from upload to storage to retrieval, ensuring complete confidentiality.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">Zero Hallucinations</h3>
-                    <p class="feature-description">Advanced RAG techniques ensure AI responses are always grounded in your actual data, eliminating false or fabricated information.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">Intelligent Document Processing</h3>
-                    <p class="feature-description">Sophisticated parsing and indexing of complex documents, databases, and knowledge bases with semantic understanding.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">Enterprise Scalability</h3>
-                    <p class="feature-description">Built to handle enterprise workloads with high availability, load balancing, and seamless scaling capabilities.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">Compliance Ready</h3>
-                    <p class="feature-description">Meets industry standards including SOC 2, GDPR, HIPAA, and other regulatory requirements for data handling.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">On-Premises Deployment</h3>
-                    <p class="feature-description">Deploy in your own infrastructure or preferred cloud environment, maintaining complete data sovereignty.</p>
+            <div class="container">
+                <h2 class="section-title">Enterprise Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3 class="feature-title">End-to-End Encryption</h3>
+                        <p class="feature-description">Military-grade encryption protects your data throughout the entire pipeline, from upload to storage to retrieval, ensuring complete confidentiality.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">Zero Hallucinations</h3>
+                        <p class="feature-description">Advanced RAG techniques ensure AI responses are always grounded in your actual data, eliminating false or fabricated information.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">Intelligent Document Processing</h3>
+                        <p class="feature-description">Sophisticated parsing and indexing of complex documents, databases, and knowledge bases with semantic understanding.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">Enterprise Scalability</h3>
+                        <p class="feature-description">Built to handle enterprise workloads with high availability, load balancing, and seamless scaling capabilities.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">Compliance Ready</h3>
+                        <p class="feature-description">Meets industry standards including SOC 2, GDPR, HIPAA, and other regulatory requirements for data handling.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="feature-title">On-Premises Deployment</h3>
+                        <p class="feature-description">Deploy in your own infrastructure or preferred cloud environment, maintaining complete data sovereignty.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Upload Section -->
         <section id="upload" class="section">
-            <h2 class="section-title">Upload Your Data</h2>
-            <div class="upload-section">
-                <p style="color: #6b7280; font-size: 1.1rem; margin-bottom: 2rem;">
-                    Securely upload your documents, databases, or knowledge bases. RAGence will process and index your data for intelligent AI interactions.
-                </p>
-                
-                <div class="upload-area">
-                    <h3 style="color: #374151; margin-bottom: 1rem;">Select Your Files</h3>
-                    <p style="color: #6b7280; margin-bottom: 1.5rem;">Supported formats: PDF, DOCX, TXT, CSV, JSON, XML</p>
-                    
-                    <input type="file" id="file-upload" multiple accept=".pdf,.docx,.txt,.csv,.json,.xml" style="display: none;">
-                    <label for="file-upload" class="file-label">Choose Files</label>
+            <div class="container">
+                <h2 class="section-title">Upload Your Data</h2>
+                <div class="upload-section">
+                    <p>Securely upload your documents, databases, or knowledge bases. RAGence will process and index your data for intelligent AI interactions.</p>
+
+                    <div class="upload-area" role="group" aria-labelledby="upload-heading" tabindex="0">
+                        <h3 id="upload-heading">Select Your Files</h3>
+                        <p>Supported formats: PDF, DOCX, TXT, CSV, JSON, XML</p>
+
+                        <input type="file" id="file-upload" multiple accept=".pdf,.docx,.txt,.csv,.json,.xml" class="sr-only" aria-describedby="file-formats-info">
+                        <label for="file-upload" class="file-label">Choose Files</label>
+                        <p id="file-formats-info" class="sr-only">Accepted file formats are PDF, DOCX, TXT, CSV, JSON, and XML.</p>
+                    </div>
+
+                    <button class="cta-button">Upload Your Data</button>
                 </div>
-                
-                <button class="cta-button">Upload Your Data</button>
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="section">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Get in Touch</h3>
-                    
-                    <div class="contact-item">
-                        <h4>Sales Inquiries</h4>
-                        <p>sales@ragence.com</p>
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+
+                        <div class="contact-item">
+                            <h4>Sales Inquiries</h4>
+                            <p><a href="mailto:sales@ragence.com">sales@ragence.com</a></p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h4>Technical Support</h4>
+                            <p><a href="mailto:support@ragence.com">support@ragence.com</a></p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h4>Enterprise Solutions</h4>
+                            <p><a href="mailto:enterprise@ragence.com">enterprise@ragence.com</a></p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h4>Partnership Opportunities</h4>
+                            <p><a href="mailto:partnerships@ragence.com">partnerships@ragence.com</a></p>
+                        </div>
                     </div>
-                    
-                    <div class="contact-item">
-                        <h4>Technical Support</h4>
-                        <p>support@ragence.com</p>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <h4>Enterprise Solutions</h4>
-                        <p>enterprise@ragence.com</p>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <h4>Partnership Opportunities</h4>
-                        <p>partnerships@ragence.com</p>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="linkedin-section">
-                        <h4>Connect with Our Founder</h4>
-                        <p style="color: #6b7280; margin-bottom: 1.5rem;">
-                            Interested in learning more about RAGence? Connect with our founder on LinkedIn to discuss enterprise AI solutions and partnership opportunities.
-                        </p>
-                        <a href="https://linkedin.com/in/your-profile" class="linkedin-link" target="_blank">
-                            Connect on LinkedIn
-                        </a>
-                    </div>
-                    
-                    <div style="margin-top: 2rem; padding: 2rem; background: white; border: 1px solid #e5e7eb; border-radius: 8px;">
-                        <h4 style="color: #1f2937; margin-bottom: 1rem;">Schedule a Demo</h4>
-                        <p style="color: #6b7280; margin-bottom: 1.5rem;">
-                            Ready to see RAGence in action? Schedule a personalized demo to explore how our platform can transform your business data.
-                        </p>
-                        <button class="cta-button">Request Demo</button>
+
+                    <div>
+                        <div class="linkedin-section">
+                            <h4>Connect with Our Founder</h4>
+                            <p>Interested in learning more about RAGence? Connect with our founder on LinkedIn to discuss enterprise AI solutions and partnership opportunities.</p>
+                            <a href="https://linkedin.com/in/asimsultan/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                                Connect on LinkedIn
+                            </a>
+                        </div>
+
+                        <div class="demo-card">
+                            <h4>Schedule a Demo</h4>
+                            <p>Ready to see RAGence in action? Schedule a personalized demo to explore how our platform can transform your business data.</p>
+                            <button class="cta-button">Request Demo</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
+        <div class="footer-content container">
             <div class="footer-section">
                 <h4>Company</h4>
                 <a href="#about">About Us</a>
@@ -648,117 +1154,142 @@
                 <a href="#">Compliance</a>
             </div>
         </div>
-        <div class="footer-bottom">
+        <div class="footer-bottom container">
             <p>© 2025 RAGence. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Calculate offset for fixed header
+                        const headerOffset = document.querySelector('.header').offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                        const offsetPosition = elementPosition - headerOffset - 20; // Add a little extra padding
 
-        // File upload handling
-        const fileInput = document.getElementById('file-upload');
-        const uploadArea = document.querySelector('.upload-area');
-        
-        fileInput.addEventListener('change', function(e) {
-            const files = e.target.files;
-            if (files.length > 0) {
-                const fileNames = Array.from(files).map(f => f.name).join(', ');
-                uploadArea.style.borderColor = '#6b7280';
-                uploadArea.style.backgroundColor = '#f9fafb';
-                
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+
+                        // Update URL hash without jumping
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+
+            // File upload handling
+            const fileInput = document.getElementById('file-upload');
+            const uploadArea = document.querySelector('.upload-area');
+            const uploadButton = document.querySelector('.cta-button'); // Assuming this is the 'Upload Your Data' button
+
+            fileInput.addEventListener('change', function(e) {
+                const files = e.target.files;
+                updateFileUploadDisplay(files);
+            });
+
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('drag-over'); // Use class for styling
+            });
+
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('drag-over');
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                fileInput.files = files; // Assign dropped files to input
+                updateFileUploadDisplay(files);
+            });
+
+            function updateFileUploadDisplay(files) {
                 const existingMessage = uploadArea.querySelector('.file-selected-message');
                 if (existingMessage) {
                     existingMessage.remove();
                 }
-                
-                const message = document.createElement('p');
-                message.textContent = `Selected: ${fileNames}`;
-                message.style.color = '#374151';
-                message.style.fontWeight = '500';
-                message.style.marginTop = '1rem';
-                message.className = 'file-selected-message';
-                uploadArea.appendChild(message);
+
+                if (files.length > 0) {
+                    const fileNames = Array.from(files).map(f => f.name).join(', ');
+                    uploadArea.style.borderColor = '#6b7280';
+                    uploadArea.style.backgroundColor = '#f9fafb';
+
+                    const message = document.createElement('p');
+                    message.textContent = `Selected: ${fileNames}`;
+                    message.style.color = '#374151';
+                    message.style.fontWeight = '500';
+                    message.style.marginTop = '1rem';
+                    message.className = 'file-selected-message';
+                    uploadArea.appendChild(message);
+                } else {
+                    uploadArea.style.borderColor = '#9ea8b3';
+                    uploadArea.style.backgroundColor = 'var(--bg-white)';
+                }
             }
-        });
 
-        // Drag and drop functionality
-        uploadArea.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#9ca3af';
-            this.style.backgroundColor = '#f3f4f6';
-        });
 
-        uploadArea.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#d1d5db';
-            this.style.backgroundColor = 'white';
-        });
+            // Button click handlers
+            uploadButton.addEventListener('click', function() {
+                if (fileInput.files.length > 0) {
+                    alert('Simulating upload of files: ' + Array.from(fileInput.files).map(f => f.name).join(', '));
+                    // In a real application, you'd send these files to a server
+                } else {
+                    alert('Please select files to upload.');
+                }
+            });
 
-        uploadArea.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#6b7280';
-            this.style.backgroundColor = '#f9fafb';
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                const event = new Event('change', { bubbles: true });
-                fileInput.dispatchEvent(event);
-            }
-        });
+            document.querySelectorAll('button').forEach(button => {
+                if (button.textContent.includes('Request Demo')) { // Use includes for robustness
+                    button.addEventListener('click', function() {
+                        alert('Demo scheduling functionality would be implemented here.');
+                    });
+                }
+            });
 
-        // Button click handlers
-        document.querySelector('.cta-button').addEventListener('click', function() {
-            alert('Upload functionality would be implemented here. Files selected: ' + 
-                  (fileInput.files.length > 0 ? Array.from(fileInput.files).map(f => f.name).join(', ') : 'None'));
-        });
-
-        document.querySelectorAll('button').forEach(button => {
-            if (button.textContent === 'Request Demo') {
-                button.addEventListener('click', function() {
-                    alert('Demo scheduling functionality would be implemented here.');
-                });
-            }
-        });
-
-        // Active navigation state
-        window.addEventListener('scroll', function() {
+            // Active navigation state on scroll
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
+            const activateNavLink = () => {
+                let current = '';
+                const headerHeight = document.querySelector('.header').offsetHeight;
 
-        // LinkedIn link placeholder - replace with actual profile
-        document.querySelector('.linkedin-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Please update the LinkedIn URL in the HTML with your actual LinkedIn profile URL.');
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - headerHeight - 30; // Adjusted offset for fixed header and a little buffer
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', activateNavLink);
+            window.addEventListener('resize', activateNavLink); // Recalculate on resize
+            activateNavLink(); // Call on load to set initial active link
+
+            // LinkedIn link placeholder - replace with actual profile
+            document.querySelector('.linkedin-link').addEventListener('click', function(e) {
+                // Remove the alert for a real site, ensure 'href' is correct
+                // e.preventDefault();
+                // alert('Please update the LinkedIn URL in the HTML with your actual LinkedIn profile URL.');
+            });
         });
     </script>
 </body>
